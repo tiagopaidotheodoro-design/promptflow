@@ -1,0 +1,124 @@
+{
+  "nav": {
+    "explore": "Explorar",
+    "categories": "Categorias",
+    "creators": "Criadores",
+    "plans": "Planos",
+    "dashboard": "Painel",
+    "creatorPanel": "Painel Criador",
+    "adminPanel": "Admin",
+    "login": "Entrar",
+    "register": "Cadastrar",
+    "signOut": "Sair",
+    "myFavorites": "Meus Favoritos",
+    "myAccount": "Minha Conta"
+  },
+  "hero": {
+    "badge": "Biblioteca gratuita de prompts",
+    "title": "Prompts gratuitos para criar com IA",
+    "titleHighlight": "criar com IA",
+    "subtitle": "Explore, copie, salve e compartilhe prompts para imagens, vídeos e textos em ferramentas como ChatGPT, Midjourney, Sora, Gemini e Runway.",
+    "searchPlaceholder": "Busque por thumbnail, anime, vídeo viral, produto, logo...",
+    "ctaExplore": "Explorar prompts",
+    "ctaCreator": "Publicar meu prompt",
+    "betaNote": "Todos os prompts são gratuitos durante a fase beta.",
+    "metrics": {
+      "library": "Biblioteca em crescimento",
+      "creators": "Criadores beta",
+      "languages": "PT · EN · ES"
+    },
+    "toolsLabel": "Ferramentas",
+    "objectivesLabel": "Objetivos",
+    "objectives": ["Vídeo viral", "Thumbnail", "Anime", "Produto", "Reels", "Logo", "E-commerce", "Retrato"]
+  },
+  "home": {
+    "trending": "Prompts em alta",
+    "trendingSubtitle": "Os mais copiados e salvos agora",
+    "newest": "Novos prompts",
+    "newestSubtitle": "Adicionados recentemente à biblioteca",
+    "packs": "Packs gratuitos",
+    "packsSubtitle": "Coleções de prompts organizadas por tema",
+    "seeAll": "Ver todos"
+  },
+  "howItWorks": {
+    "title": "Como funciona",
+    "subtitle": "Simples, rápido e gratuito.",
+    "steps": [
+      {
+        "title": "Explore",
+        "description": "Encontre prompts por categoria, ferramenta ou objetivo."
+      },
+      {
+        "title": "Copie",
+        "description": "Use o prompt direto na sua ferramenta de IA favorita."
+      },
+      {
+        "title": "Publique",
+        "description": "Compartilhe seus prompts e ajude a comunidade a crescer."
+      }
+    ]
+  },
+  "faq": {
+    "title": "Perguntas frequentes",
+    "items": [
+      {
+        "question": "Os prompts são gratuitos?",
+        "answer": "Sim. Durante a fase beta, todos os prompts do PromptFlow são gratuitos para explorar, copiar e salvar. Sem cartão de crédito, sem cadastro obrigatório."
+      },
+      {
+        "question": "Posso publicar meus próprios prompts?",
+        "answer": "Sim. Crie uma conta, vá ao painel de criador e envie seus prompts. Após revisão da nossa equipe, eles entram na biblioteca para toda a comunidade usar."
+      },
+      {
+        "question": "O PromptFlow terá recursos pagos?",
+        "answer": "No futuro poderemos lançar recursos opcionais, como packs avançados, ferramentas extras ou monetização para criadores. Mas a fase inicial é totalmente gratuita."
+      },
+      {
+        "question": "Quais ferramentas de IA são suportadas?",
+        "answer": "Suportamos prompts para Midjourney, DALL·E 3, Stable Diffusion, Adobe Firefly, Sora, Kling, RunwayML, ChatGPT, Claude, Gemini e muito mais."
+      },
+      {
+        "question": "Preciso criar uma conta para usar?",
+        "answer": "Não. Você pode explorar e copiar prompts sem conta. Para salvar favoritos e publicar seus próprios prompts, basta criar uma conta gratuita."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Faça parte do PromptFlow",
+    "subtitle": "Publique seus prompts, salve favoritos e ajude a construir uma biblioteca aberta e gratuita para criadores com IA.",
+    "button": "Entrar na comunidade",
+    "secondary": "Publicar meu prompt"
+  },
+  "prompt": {
+    "copy": "Copiar prompt",
+    "copyEn": "Copiar em inglês",
+    "save": "Salvar",
+    "share": "Compartilhar",
+    "promptPt": "Prompt em Português",
+    "promptEn": "Prompt em Inglês",
+    "negativePrompt": "Prompt negativo",
+    "instructions": "Instruções de uso",
+    "related": "Prompts semelhantes",
+    "tool": "Ferramenta",
+    "type": "Tipo",
+    "language": "Idioma",
+    "creator": "Criador"
+  },
+  "footer": {
+    "description": "Biblioteca gratuita e colaborativa de prompts para IA.",
+    "product": "Plataforma",
+    "explore": "Explorar",
+    "categories": "Categorias",
+    "creators": "Criadores",
+    "plans": "Planos",
+    "community": "Comunidade",
+    "discord": "Discord",
+    "github": "GitHub",
+    "blog": "Blog",
+    "legal": "Legal",
+    "terms": "Termos de Uso",
+    "privacy": "Privacidade",
+    "cookies": "Cookies",
+    "rights": "Todos os direitos reservados."
+  }
+}

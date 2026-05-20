@@ -1,0 +1,124 @@
+{
+  "nav": {
+    "explore": "Explore",
+    "categories": "Categories",
+    "creators": "Creators",
+    "plans": "Plans",
+    "dashboard": "Dashboard",
+    "creatorPanel": "Creator Panel",
+    "adminPanel": "Admin",
+    "login": "Sign In",
+    "register": "Sign Up",
+    "signOut": "Sign Out",
+    "myFavorites": "My Favorites",
+    "myAccount": "My Account"
+  },
+  "hero": {
+    "badge": "Free prompt library",
+    "title": "Free prompts to create with AI",
+    "titleHighlight": "create with AI",
+    "subtitle": "Explore, copy, save and share prompts for images, videos and text in tools like ChatGPT, Midjourney, Sora, Gemini and Runway.",
+    "searchPlaceholder": "Search for thumbnail, anime, viral video, product, logo...",
+    "ctaExplore": "Explore prompts",
+    "ctaCreator": "Publish my prompt",
+    "betaNote": "All prompts are free during the beta phase.",
+    "metrics": {
+      "library": "Growing library",
+      "creators": "Beta creators",
+      "languages": "PT · EN · ES"
+    },
+    "toolsLabel": "Tools",
+    "objectivesLabel": "Goals",
+    "objectives": ["Viral video", "Thumbnail", "Anime", "Product", "Reels", "Logo", "E-commerce", "Portrait"]
+  },
+  "home": {
+    "trending": "Trending prompts",
+    "trendingSubtitle": "The most copied and saved right now",
+    "newest": "New prompts",
+    "newestSubtitle": "Recently added to the library",
+    "packs": "Free packs",
+    "packsSubtitle": "Prompt collections organized by theme",
+    "seeAll": "See all"
+  },
+  "howItWorks": {
+    "title": "How it works",
+    "subtitle": "Simple, fast and free.",
+    "steps": [
+      {
+        "title": "Explore",
+        "description": "Find prompts by category, tool or goal."
+      },
+      {
+        "title": "Copy",
+        "description": "Use the prompt directly in your favorite AI tool."
+      },
+      {
+        "title": "Publish",
+        "description": "Share your prompts and help the community grow."
+      }
+    ]
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "items": [
+      {
+        "question": "Are prompts free?",
+        "answer": "Yes. During the beta phase, all PromptFlow prompts are free to explore, copy and save. No credit card, no mandatory sign-up."
+      },
+      {
+        "question": "Can I publish my own prompts?",
+        "answer": "Yes. Create an account, go to the creator panel and submit your prompts. After review by our team, they enter the library for the whole community to use."
+      },
+      {
+        "question": "Will PromptFlow have paid features?",
+        "answer": "In the future we may launch optional features, such as advanced packs, extra tools or monetization for creators. But the initial phase is completely free."
+      },
+      {
+        "question": "Which AI tools are supported?",
+        "answer": "We support prompts for Midjourney, DALL·E 3, Stable Diffusion, Adobe Firefly, Sora, Kling, RunwayML, ChatGPT, Claude, Gemini and much more."
+      },
+      {
+        "question": "Do I need an account to use it?",
+        "answer": "No. You can explore and copy prompts without an account. To save favorites and publish your own prompts, just create a free account."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Join PromptFlow",
+    "subtitle": "Publish your prompts, save favorites and help build an open and free library for AI creators.",
+    "button": "Join the community",
+    "secondary": "Publish my prompt"
+  },
+  "prompt": {
+    "copy": "Copy prompt",
+    "copyEn": "Copy in English",
+    "save": "Save",
+    "share": "Share",
+    "promptPt": "Prompt in Portuguese",
+    "promptEn": "Prompt in English",
+    "negativePrompt": "Negative prompt",
+    "instructions": "Usage instructions",
+    "related": "Similar prompts",
+    "tool": "Tool",
+    "type": "Type",
+    "language": "Language",
+    "creator": "Creator"
+  },
+  "footer": {
+    "description": "Free and collaborative AI prompts library.",
+    "product": "Platform",
+    "explore": "Explore",
+    "categories": "Categories",
+    "creators": "Creators",
+    "plans": "Plans",
+    "community": "Community",
+    "discord": "Discord",
+    "github": "GitHub",
+    "blog": "Blog",
+    "legal": "Legal",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "cookies": "Cookies",
+    "rights": "All rights reserved."
+  }
+}
