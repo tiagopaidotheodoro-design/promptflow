@@ -4,6 +4,8 @@ import { PromptGrid } from "@/components/prompts/PromptGrid";
 import type { Prompt } from "@/types";
 import type { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 interface PageProps {
   params: { slug: string };
 }

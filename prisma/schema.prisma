@@ -3,9 +3,7 @@ generator client {
 }
 
 datasource db {
-  // LOCAL DEV: SQLite (sem instalação necessária)
-  // PRODUÇÃO:  troque para "postgresql" e atualize DATABASE_URL
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 

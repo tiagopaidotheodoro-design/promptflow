@@ -5,6 +5,8 @@ import { PromptFilters } from "@/components/prompts/PromptFilters";
 import type { Prompt } from "@/types";
 import type { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Explorar Prompts",
   description: "Explore centenas de prompts para IA em português. Imagens, vídeos, textos e packs.",

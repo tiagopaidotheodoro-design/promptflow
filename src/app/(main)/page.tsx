@@ -8,6 +8,8 @@ import { CtaSection } from "@/components/home/CtaSection";
 import { PromptGrid } from "@/components/prompts/PromptGrid";
 import type { Prompt } from "@/types";
 
+export const dynamic = "force-dynamic";
+
 async function getHomeData() {
   const [featured, packs] = await Promise.all([
     // Apenas IMAGE, VIDEO e TEXT — sem packs

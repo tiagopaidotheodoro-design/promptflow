@@ -3,6 +3,8 @@ import { PromptGrid } from "@/components/prompts/PromptGrid";
 import type { Prompt } from "@/types";
 import type { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Prompts Grátis",
   description: "Centenas de prompts gratuitos para criar imagens, vídeos e textos com IA.",
