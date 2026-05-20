@@ -3,20 +3,17 @@ import { auth } from "@/lib/auth";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import Link from "next/link";
-import { LayoutDashboard, PlusCircle, BarChart3, FileText } from "lucide-react";
+import { LayoutDashboard, PlusCircle, FileText } from "lucide-react";
 
 const sideLinks = [
   { href: "/creator", label: "Visão geral", icon: LayoutDashboard },
   { href: "/creator/prompts", label: "Meus prompts", icon: FileText },
   { href: "/creator/prompts/novo", label: "Novo prompt", icon: PlusCircle },
-  { href: "/creator/ganhos", label: "Ganhos", icon: BarChart3 },
 ];
 
 export default async function CreatorLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
-  const user = session?.user as any;
   if (!session) redirect("/login");
-  if (user?.role !== "CREATOR" && user?.role !== "ADMIN") redirect("/dashboard");
 
   return (
     <div className="flex min-h-screen flex-col">

@@ -3,18 +3,30 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { slugify } from "@/lib/utils";
 
+// Normaliza tags para string JSON (o banco armazena como String)
+function tagsToString(tags: unknown): string {
+  if (Array.isArray(tags)) return JSON.stringify(tags);
+  if (typeof tags === "string") {
+    // já é string — se for JSON válido mantém, senão trata como CSV
+    try {
+      JSON.parse(tags);
+      return tags;
+    } catch {
+      return JSON.stringify(tags.split(",").map((t) => t.trim()).filter(Boolean));
+    }
+  }
+  return "[]";
+}
+
 export async function POST(req: Request) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const user = session.user as any;
-  if (user.role !== "CREATOR" && user.role !== "ADMIN") {
-    return NextResponse.json({ error: "Apenas criadores podem cadastrar prompts." }, { status: 403 });
-  }
 
   const body = await req.json();
   const { title, description, type, recommendedTool, promptPt, promptEn, negativePrompt,
-    instructions, aspectRatio, price, isFree, isPremium, previewImage, tags } = body;
+    instructions, aspectRatio, previewImage, tags } = body;
 
   if (!title || !description || !promptPt) {
     return NextResponse.json({ error: "Campos obrigatórios: título, descrição e prompt PT." }, { status: 400 });
@@ -37,8 +49,8 @@ export async function POST(req: Request) {
       title, slug, description, type, categoryId, creatorId: user.id,
       promptPt, promptEn: promptEn || null, negativePrompt: negativePrompt || null,
       instructions: instructions || null, recommendedTool, aspectRatio: aspectRatio || "1:1",
-      price: price || 0, isFree: !!isFree, isPremium: !!isPremium,
-      previewImage: previewImage || null, tags: tags || [],
+      price: 0, isFree: true, isPremium: false,
+      previewImage: previewImage || null, tags: tagsToString(tags),
       status: "PENDING",
     },
   });
@@ -73,11 +85,11 @@ export async function PUT(req: Request) {
       negativePrompt: data.negativePrompt || null,
       instructions: data.instructions || null,
       aspectRatio: data.aspectRatio,
-      price: data.price || 0,
-      isFree: !!data.isFree,
-      isPremium: !!data.isPremium,
+      price: 0,
+      isFree: true,
+      isPremium: false,
       previewImage: data.previewImage || null,
-      tags: data.tags || [],
+      tags: tagsToString(data.tags),
       status: user.role === "ADMIN" ? data.status : "PENDING",
     },
   });

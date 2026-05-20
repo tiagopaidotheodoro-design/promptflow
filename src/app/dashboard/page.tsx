@@ -1,42 +1,34 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import { Heart, Copy, ShoppingBag, Star } from "lucide-react";
-import { planLabel } from "@/lib/utils";
+import { Heart, Copy, FileText, Star, PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default async function DashboardPage() {
   const session = await auth();
   const user = session?.user as any;
 
-  const [favCount, copiesCount, purchasesCount] = await Promise.all([
+  const [favCount, copiesCount, publishedCount] = await Promise.all([
     prisma.favorite.count({ where: { userId: user.id } }),
     prisma.promptCopy.count({ where: { userId: user.id } }),
-    prisma.purchase.count({ where: { userId: user.id } }),
+    prisma.prompt.count({ where: { creatorId: user.id } }),
   ]);
 
   const stats = [
     { label: "Favoritos", value: favCount, icon: Heart, color: "text-red-400" },
     { label: "Prompts copiados", value: copiesCount, icon: Copy, color: "text-brand-blue-neon" },
-    { label: "Compras", value: purchasesCount, icon: ShoppingBag, color: "text-brand-purple" },
+    { label: "Prompts publicados", value: publishedCount, icon: FileText, color: "text-brand-purple" },
   ];
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-text-primary">
-            Olá, {user?.name?.split(" ")[0] ?? "usuário"} 👋
-          </h1>
-          <p className="text-sm text-text-secondary mt-0.5">
-            Plano atual: <span className="font-semibold text-brand-purple">{planLabel(user?.plan)}</span>
-          </p>
-        </div>
-        {user?.plan === "FREE" && (
-          <Link href="/planos">
-            <Button size="sm" variant="gradient">Fazer upgrade →</Button>
-          </Link>
-        )}
+      <div>
+        <h1 className="text-2xl font-bold text-text-primary">
+          Olá, {user?.name?.split(" ")[0] ?? "usuário"} 👋
+        </h1>
+        <p className="text-sm text-text-secondary mt-0.5">
+          Bem-vindo à sua biblioteca de prompts.
+        </p>
       </div>
 
       {/* Stats */}
@@ -50,22 +42,20 @@ export default async function DashboardPage() {
         ))}
       </div>
 
-      {/* Plan card */}
+      {/* Publish call */}
       <div className="rounded-2xl border border-brand-purple/30 bg-gradient-card p-5">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <p className="font-semibold text-text-primary">Plano {planLabel(user?.plan)}</p>
+            <p className="font-semibold text-text-primary">Compartilhe seus prompts</p>
             <p className="text-sm text-text-secondary mt-0.5">
-              {user?.plan === "FREE"
-                ? "Faça upgrade para acessar prompts premium ilimitados."
-                : "Você tem acesso a todos os prompts premium da plataforma."}
+              Publique seus prompts e ajude a comunidade do PromptFlow a crescer. É grátis.
             </p>
           </div>
-          {user?.plan === "FREE" && (
-            <Link href="/planos" className="shrink-0">
-              <Button size="sm">Ver planos</Button>
-            </Link>
-          )}
+          <Link href="/creator/prompts/novo" className="shrink-0">
+            <Button size="sm" variant="gradient">
+              <PlusCircle className="h-4 w-4" /> Publicar prompt
+            </Button>
+          </Link>
         </div>
       </div>
 

@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
-import { planLabel, roleLabel } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { PlusCircle } from "lucide-react";
 
 export default async function ContaPage() {
   const session = await auth();
@@ -29,32 +29,16 @@ export default async function ContaPage() {
 
         <div className="h-px bg-border" />
 
-        {/* Info */}
-        <div className="grid grid-cols-2 gap-4 text-sm">
-          <div>
-            <p className="text-text-muted mb-0.5">Plano atual</p>
-            <p className="font-semibold text-text-primary">{planLabel(user?.plan)}</p>
-          </div>
-          <div>
-            <p className="text-text-muted mb-0.5">Tipo de conta</p>
-            <p className="font-semibold text-text-primary">{roleLabel(user?.role)}</p>
-          </div>
-        </div>
-
-        <div className="h-px bg-border" />
-
         {/* Actions */}
         <div className="flex flex-wrap gap-2">
-          {user?.plan === "FREE" && (
-            <Link href="/planos">
-              <Button size="sm" variant="gradient">Fazer upgrade</Button>
-            </Link>
-          )}
-          {user?.role === "USER" && (
-            <Link href="/vender">
-              <Button size="sm" variant="secondary">Tornar-se criador</Button>
-            </Link>
-          )}
+          <Link href="/creator/prompts/novo">
+            <Button size="sm" variant="gradient">
+              <PlusCircle className="h-4 w-4" /> Publicar um prompt
+            </Button>
+          </Link>
+          <Link href="/creator/prompts">
+            <Button size="sm" variant="secondary">Meus prompts</Button>
+          </Link>
         </div>
       </div>
     </div>

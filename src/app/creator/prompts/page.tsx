@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { PlusCircle, Edit2, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { formatPrice } from "@/lib/utils";
+import { promptTypeLabel } from "@/lib/utils";
 
 const statusConfig: Record<string, { label: string; class: string }> = {
   APPROVED: { label: "Aprovado", class: "bg-brand-green/15 text-brand-green-neon" },
@@ -20,8 +20,7 @@ export default async function CreatorPromptsPage() {
     orderBy: { createdAt: "desc" },
     select: {
       id: true, title: true, slug: true, type: true, status: true,
-      price: true, isFree: true, copiesCount: true, favoritesCount: true, salesCount: true,
-      createdAt: true,
+      copiesCount: true, favoritesCount: true, createdAt: true,
     },
   });
 
@@ -39,9 +38,9 @@ export default async function CreatorPromptsPage() {
       <div className="rounded-2xl border border-border bg-surface overflow-hidden">
         {prompts.length === 0 ? (
           <div className="py-16 text-center">
-            <p className="text-text-muted mb-4">Você ainda não cadastrou nenhum prompt.</p>
+            <p className="text-text-muted mb-4">Você ainda não publicou nenhum prompt.</p>
             <Link href="/creator/prompts/novo">
-              <Button size="sm" variant="gradient">Cadastrar primeiro prompt</Button>
+              <Button size="sm" variant="gradient">Publicar primeiro prompt</Button>
             </Link>
           </div>
         ) : (
@@ -51,7 +50,6 @@ export default async function CreatorPromptsPage() {
                 <tr className="border-b border-border text-left">
                   <th className="px-4 py-3 text-xs font-semibold text-text-muted">Título</th>
                   <th className="px-4 py-3 text-xs font-semibold text-text-muted">Tipo</th>
-                  <th className="px-4 py-3 text-xs font-semibold text-text-muted">Preço</th>
                   <th className="px-4 py-3 text-xs font-semibold text-text-muted">Status</th>
                   <th className="px-4 py-3 text-xs font-semibold text-text-muted">Cópias</th>
                   <th className="px-4 py-3 text-xs font-semibold text-text-muted">Ações</th>
@@ -62,11 +60,10 @@ export default async function CreatorPromptsPage() {
                   const s = statusConfig[p.status] ?? statusConfig.PENDING;
                   return (
                     <tr key={p.id} className="hover:bg-surface-2 transition-colors">
-                      <td className="px-4 py-3 max-w-[200px]">
+                      <td className="px-4 py-3 max-w-[240px]">
                         <p className="font-medium text-text-primary truncate">{p.title}</p>
                       </td>
-                      <td className="px-4 py-3 text-text-muted text-xs">{p.type}</td>
-                      <td className="px-4 py-3 text-text-secondary">{p.isFree ? "Grátis" : formatPrice(p.price)}</td>
+                      <td className="px-4 py-3 text-text-muted text-xs">{promptTypeLabel(p.type)}</td>
                       <td className="px-4 py-3">
                         <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${s.class}`}>
                           {s.label}

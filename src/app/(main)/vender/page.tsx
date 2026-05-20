@@ -1,41 +1,45 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { DollarSign, BarChart3, Shield, Zap } from "lucide-react";
+import { Sparkles, BarChart3, Globe, Award } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Vender Prompts",
-  description: "Monetize seus prompts de IA compartilhando na maior comunidade global.",
+  title: "Publicar Prompts",
+  description: "Compartilhe seus prompts de IA com a comunidade global do PromptFlow. Grátis e aberto.",
 };
 
 const benefits = [
-  { icon: DollarSign, title: "Ganhe por cada venda", desc: "Receba uma porcentagem de cada prompt vendido. Quanto mais prompts, mais ganhos." },
-  { icon: BarChart3, title: "Painel de estatísticas", desc: "Acompanhe vendas, visualizações, cópias e favoritos em tempo real." },
-  { icon: Shield, title: "Revisão de qualidade", desc: "Nossa equipe revisa cada prompt antes de publicar para garantir a qualidade." },
-  { icon: Zap, title: "Acesso Creator gratuito", desc: "Criadores aprovados ganham acesso à área Creator com benefícios exclusivos." },
+  { icon: Globe, title: "Ajude a comunidade", desc: "Seus prompts ficam disponíveis gratuitamente para criadores do mundo todo." },
+  { icon: BarChart3, title: "Acompanhe o alcance", desc: "Veja quantas cópias e favoritos cada prompt seu recebeu, em tempo real." },
+  { icon: Award, title: "Construa reputação", desc: "Tenha um perfil público de criador e ganhe destaque na biblioteca." },
+  { icon: Sparkles, title: "Revisão de qualidade", desc: "Nossa equipe revisa cada prompt antes de publicar para manter o padrão." },
 ];
 
 const steps = [
-  { num: "01", title: "Crie sua conta", desc: "Cadastre-se gratuitamente e acesse o painel do criador." },
-  { num: "02", title: "Cadastre seus prompts", desc: "Preencha as informações, faça upload do preview e defina o preço." },
-  { num: "03", title: "Aguarde aprovação", desc: "Nossa equipe revisa em até 24h e publica na plataforma." },
-  { num: "04", title: "Comece a ganhar", desc: "Seus prompts ficam disponíveis para compra e você recebe por cada venda." },
+  { num: "01", title: "Crie sua conta", desc: "Cadastre-se gratuitamente e acesse a área do criador." },
+  { num: "02", title: "Publique seu prompt", desc: "Preencha as informações, adicione a imagem de preview e as tags." },
+  { num: "03", title: "Aguarde a revisão", desc: "Nossa equipe revisa em até 24h e publica na biblioteca." },
+  { num: "04", title: "Acompanhe", desc: "Veja seus prompts ganharem cópias e favoritos da comunidade." },
 ];
 
-export default function VenderPage() {
+export default function PublicarPage() {
   return (
     <div className="container py-16">
       {/* Hero */}
       <div className="text-center mb-16">
-        <h1 className="text-4xl font-extrabold text-text-primary mb-4">
-          Monetize seus prompts de IA
+        <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-purple/30 bg-brand-purple/10 px-4 py-1.5">
+          <Sparkles className="h-3.5 w-3.5 text-brand-purple" />
+          <span className="text-xs font-semibold text-brand-purple">Comunidade aberta e gratuita</span>
+        </div>
+        <h1 className="text-4xl font-extrabold text-text-primary mb-4 text-balance">
+          Compartilhe seus prompts com a comunidade
         </h1>
-        <p className="text-text-secondary max-w-xl mx-auto mb-8">
-          Cadastre seus melhores prompts no PromptFlow e contribua com a comunidade global de IA.
-          Simples, rápido e sem taxas abusivas.
+        <p className="text-text-secondary max-w-xl mx-auto mb-8 text-balance">
+          Publique seus melhores prompts no PromptFlow e ajude a construir uma biblioteca
+          aberta de IA para criadores do mundo todo. É grátis.
         </p>
-        <Link href="/cadastro">
-          <Button size="xl" variant="gradient">Começar a vender →</Button>
+        <Link href="/creator/prompts/novo">
+          <Button size="xl" variant="gradient">Publicar meu prompt →</Button>
         </Link>
       </div>
 
@@ -71,10 +75,10 @@ export default function VenderPage() {
       {/* CTA */}
       <div className="rounded-3xl border border-brand-purple/30 bg-gradient-card p-10 text-center">
         <h2 className="text-2xl font-bold text-text-primary mb-3">Pronto para começar?</h2>
-        <p className="text-text-secondary mb-6">Crie sua conta e cadastre seu primeiro prompt hoje.</p>
+        <p className="text-text-secondary mb-6">Crie sua conta e publique seu primeiro prompt hoje.</p>
         <div className="flex flex-wrap justify-center gap-3">
-          <Link href="/cadastro"><Button size="lg" variant="gradient">Criar conta de criador</Button></Link>
-          <Link href="/creator"><Button size="lg" variant="secondary">Acessar painel</Button></Link>
+          <Link href="/cadastro"><Button size="lg" variant="gradient">Criar conta grátis</Button></Link>
+          <Link href="/creator/prompts/novo"><Button size="lg" variant="secondary">Publicar prompt</Button></Link>
         </div>
       </div>
     </div>

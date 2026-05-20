@@ -103,16 +103,14 @@ export function Header() {
                       <LayoutDashboard className="h-4 w-4" />
                       {t("nav.dashboard")}
                     </Link>
-                    {(user?.role === "CREATOR" || user?.role === "ADMIN") && (
-                      <Link
-                        href="/creator"
-                        onClick={() => setUserMenuOpen(false)}
-                        className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-text-secondary hover:text-text-primary hover:bg-surface transition-colors"
-                      >
-                        <PenSquare className="h-4 w-4" />
-                        {t("nav.creatorPanel")}
-                      </Link>
-                    )}
+                    <Link
+                      href="/creator"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-text-secondary hover:text-text-primary hover:bg-surface transition-colors"
+                    >
+                      <PenSquare className="h-4 w-4" />
+                      {t("nav.creatorPanel")}
+                    </Link>
                     {user?.role === "ADMIN" && (
                       <Link
                         href="/admin"

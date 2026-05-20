@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, FileText, Heart, Copy, DollarSign } from "lucide-react";
+import { PlusCircle, FileText, Heart, Copy } from "lucide-react";
 import { formatNumber } from "@/lib/utils";
 
 export default async function CreatorDashboardPage() {
@@ -13,7 +13,7 @@ export default async function CreatorDashboardPage() {
     where: { creatorId: user.id },
     select: {
       id: true, title: true, slug: true, status: true,
-      copiesCount: true, favoritesCount: true, salesCount: true, price: true,
+      copiesCount: true, favoritesCount: true,
     },
     orderBy: { createdAt: "desc" },
     take: 5,
@@ -23,19 +23,16 @@ export default async function CreatorDashboardPage() {
     (acc, p) => ({
       copies: acc.copies + p.copiesCount,
       favorites: acc.favorites + p.favoritesCount,
-      sales: acc.sales + p.salesCount,
-      revenue: acc.revenue + p.salesCount * p.price * 0.7,
     }),
-    { copies: 0, favorites: 0, sales: 0, revenue: 0 }
+    { copies: 0, favorites: 0 }
   );
 
   const totalPrompts = await prisma.prompt.count({ where: { creatorId: user.id } });
 
   const stats = [
-    { label: "Prompts", value: totalPrompts, icon: FileText, color: "text-brand-purple" },
+    { label: "Prompts publicados", value: totalPrompts, icon: FileText, color: "text-brand-purple" },
     { label: "Cópias", value: formatNumber(totals.copies), icon: Copy, color: "text-brand-blue-neon" },
     { label: "Favoritos", value: formatNumber(totals.favorites), icon: Heart, color: "text-red-400" },
-    { label: "Ganhos sim.", value: `R$ ${totals.revenue.toFixed(2).replace(".", ",")}`, icon: DollarSign, color: "text-brand-green-neon" },
   ];
 
   const statusLabel: Record<string, string> = {
@@ -56,7 +53,7 @@ export default async function CreatorDashboardPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-3 gap-4">
         {stats.map((s) => (
           <div key={s.label} className="rounded-2xl border border-border bg-surface p-4 text-center">
             <s.icon className={`mx-auto h-5 w-5 mb-2 ${s.color}`} />
@@ -77,7 +74,7 @@ export default async function CreatorDashboardPage() {
         <div className="divide-y divide-border">
           {prompts.length === 0 && (
             <div className="py-10 text-center text-text-muted text-sm">
-              Você ainda não cadastrou nenhum prompt.
+              Você ainda não publicou nenhum prompt.
             </div>
           )}
           {prompts.map((p) => (

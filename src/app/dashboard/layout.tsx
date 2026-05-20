@@ -3,12 +3,12 @@ import { auth } from "@/lib/auth";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import Link from "next/link";
-import { Heart, ShoppingBag, Clock, User, LayoutDashboard } from "lucide-react";
+import { Heart, PlusCircle, User, LayoutDashboard } from "lucide-react";
 
 const sideLinks = [
   { href: "/dashboard", label: "Painel", icon: LayoutDashboard },
   { href: "/dashboard/favoritos", label: "Favoritos", icon: Heart },
-  { href: "/dashboard/compras", label: "Compras", icon: ShoppingBag },
+  { href: "/creator/prompts/novo", label: "Publicar prompt", icon: PlusCircle },
   { href: "/dashboard/conta", label: "Minha conta", icon: User },
 ];
 

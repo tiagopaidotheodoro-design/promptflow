@@ -11,6 +11,20 @@ import { TOOLS } from "@/lib/constants";
 const TYPES = ["IMAGE", "VIDEO", "TEXT", "PACK"];
 const ASPECT_RATIOS = ["1:1", "16:9", "9:16", "4:5", "2:3", "3:2", "Livre"];
 
+// tags pode vir como array ou como string JSON ('["a","b"]') — normaliza para CSV
+function tagsToInput(tags: unknown): string {
+  if (Array.isArray(tags)) return tags.join(", ");
+  if (typeof tags === "string") {
+    try {
+      const parsed = JSON.parse(tags);
+      return Array.isArray(parsed) ? parsed.join(", ") : tags;
+    } catch {
+      return tags;
+    }
+  }
+  return "";
+}
+
 export function NewPromptForm({ initialData }: { initialData?: any }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -28,7 +42,7 @@ export function NewPromptForm({ initialData }: { initialData?: any }) {
     isFree: initialData?.isFree ?? true,
     isPremium: initialData?.isPremium ?? false,
     previewImage: initialData?.previewImage ?? "",
-    tags: initialData?.tags?.join(", ") ?? "",
+    tags: tagsToInput(initialData?.tags),
     categorySlug: initialData?.categorySlug ?? "",
   });
 
@@ -43,7 +57,9 @@ export function NewPromptForm({ initialData }: { initialData?: any }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...form,
-        price: parseFloat(form.price) || 0,
+        price: 0,
+        isFree: true,
+        isPremium: false,
         tags: form.tags.split(",").map((t: string) => t.trim()).filter(Boolean),
         id: initialData?.id,
       }),
@@ -127,26 +143,14 @@ export function NewPromptForm({ initialData }: { initialData?: any }) {
           <Input placeholder="https://..." value={form.previewImage} onChange={(e) => set("previewImage", e.target.value)} />
         </div>
 
-        <div className="space-y-1">
+        <div className="sm:col-span-2 space-y-1">
           <label className="text-xs font-medium text-text-secondary">Tags (separadas por vírgula)</label>
           <Input placeholder="retrato, anime, viral, tiktok" value={form.tags} onChange={(e) => set("tags", e.target.value)} />
         </div>
+      </div>
 
-        <div className="space-y-1">
-          <label className="text-xs font-medium text-text-secondary">Preço (R$)</label>
-          <Input type="number" min="0" step="0.01" placeholder="0.00" value={form.price} onChange={(e) => set("price", e.target.value)} disabled={form.isFree} />
-        </div>
-
-        <div className="sm:col-span-2 flex gap-6">
-          <label className="flex items-center gap-2 text-sm text-text-secondary cursor-pointer">
-            <input type="checkbox" className="rounded" checked={form.isFree} onChange={(e) => { set("isFree", e.target.checked); if (e.target.checked) { set("isPremium", false); set("price", "0"); } }} />
-            Gratuito
-          </label>
-          <label className="flex items-center gap-2 text-sm text-text-secondary cursor-pointer">
-            <input type="checkbox" className="rounded" checked={form.isPremium} onChange={(e) => { set("isPremium", e.target.checked); if (e.target.checked) set("isFree", false); }} />
-            Premium (incluído em planos)
-          </label>
-        </div>
+      <div className="rounded-xl border border-brand-green/20 bg-brand-green/5 px-4 py-3 text-xs text-text-secondary">
+        ✓ Todos os prompts publicados no PromptFlow são gratuitos para a comunidade.
       </div>
 
       <div className="flex gap-3 pt-2">
