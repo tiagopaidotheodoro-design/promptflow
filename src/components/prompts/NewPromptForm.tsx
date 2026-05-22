@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toaster";
-import { Loader2 } from "lucide-react";
+import { Loader2, Upload, X } from "lucide-react";
 import { TOOLS } from "@/lib/constants";
 
 const TYPES = ["IMAGE", "VIDEO", "TEXT", "PACK"];
@@ -28,6 +28,7 @@ function tagsToInput(tags: unknown): string {
 export function NewPromptForm({ initialData }: { initialData?: any }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [form, setForm] = useState({
     title: initialData?.title ?? "",
     description: initialData?.description ?? "",
@@ -47,6 +48,31 @@ export function NewPromptForm({ initialData }: { initialData?: any }) {
   });
 
   const set = (k: string, v: any) => setForm((f) => ({ ...f, [k]: v }));
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    const fd = new FormData();
+    fd.append("file", file);
+
+    try {
+      const res = await fetch("/api/upload", { method: "POST", body: fd });
+      const data = await res.json();
+      if (!res.ok) {
+        toast({ title: "Erro", description: data.error, variant: "destructive" });
+      } else {
+        set("previewImage", data.url);
+        toast({ title: "Imagem enviada!" });
+      }
+    } catch {
+      toast({ title: "Erro", description: "Falha ao enviar a imagem.", variant: "destructive" });
+    } finally {
+      setUploading(false);
+      e.target.value = "";
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -139,16 +165,60 @@ export function NewPromptForm({ initialData }: { initialData?: any }) {
         </div>
 
         <div className="space-y-1">
-          <label className="text-xs font-medium text-text-secondary">URL da imagem de preview</label>
-          <Input placeholder="https://exemplo.com/imagem.jpg" value={form.previewImage} onChange={(e) => set("previewImage", e.target.value)} />
-          <p className="text-[11px] text-text-muted">
-            Link direto de uma imagem (.jpg, .png, .webp). Não use links de página ou de conversa.
-          </p>
-        </div>
-
-        <div className="sm:col-span-2 space-y-1">
           <label className="text-xs font-medium text-text-secondary">Tags (separadas por vírgula)</label>
           <Input placeholder="retrato, anime, viral, tiktok" value={form.tags} onChange={(e) => set("tags", e.target.value)} />
+        </div>
+
+        {/* Imagem de preview — upload do computador */}
+        <div className="sm:col-span-2 space-y-2">
+          <label className="text-xs font-medium text-text-secondary">Imagem de preview</label>
+
+          {form.previewImage ? (
+            <div className="relative inline-block">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={form.previewImage}
+                alt="Pré-visualização"
+                className="h-44 w-auto rounded-xl border border-border object-cover"
+              />
+              <button
+                type="button"
+                onClick={() => set("previewImage", "")}
+                className="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-red-500 text-white shadow-lg hover:bg-red-600 transition-colors"
+                title="Remover imagem"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          ) : (
+            <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border bg-surface-2 p-8 text-center transition-colors hover:border-brand-purple/40 hover:bg-surface">
+              {uploading ? (
+                <>
+                  <Loader2 className="h-6 w-6 animate-spin text-brand-purple" />
+                  <span className="text-sm text-text-secondary">Enviando imagem...</span>
+                </>
+              ) : (
+                <>
+                  <Upload className="h-6 w-6 text-text-muted" />
+                  <span className="text-sm font-medium text-text-primary">Escolher imagem do computador</span>
+                  <span className="text-[11px] text-text-muted">PNG, JPG ou WEBP — até 8MB</span>
+                </>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleFileUpload}
+                disabled={uploading}
+              />
+            </label>
+          )}
+
+          <Input
+            placeholder="ou cole uma URL de imagem (https://...)"
+            value={form.previewImage}
+            onChange={(e) => set("previewImage", e.target.value)}
+          />
         </div>
       </div>
 
@@ -157,7 +227,7 @@ export function NewPromptForm({ initialData }: { initialData?: any }) {
       </div>
 
       <div className="flex gap-3 pt-2">
-        <Button type="submit" className="flex-1 sm:flex-none sm:w-48" disabled={loading}>
+        <Button type="submit" className="flex-1 sm:flex-none sm:w-48" disabled={loading || uploading}>
           {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : initialData ? "Salvar alterações" : "Enviar para revisão"}
         </Button>
         <Button type="button" variant="secondary" onClick={() => router.back()}>

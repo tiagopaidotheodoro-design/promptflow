@@ -93,19 +93,29 @@ export default async function PromptPage({ params }: PageProps) {
       : p.tags
     : [];
 
+  // Proporção real da imagem com base no aspectRatio do prompt
+  const ratioMap: Record<string, string> = {
+    "1:1": "1 / 1", "16:9": "16 / 9", "9:16": "9 / 16",
+    "4:5": "4 / 5", "2:3": "2 / 3", "3:2": "3 / 2",
+  };
+  const previewAspect = ratioMap[p.aspectRatio] ?? "4 / 3";
+
   return (
     <div className="container py-10">
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-5">
 
         {/* Left — Preview */}
         <div className="lg:col-span-3 space-y-6">
-          <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-border bg-surface-2">
+          <div
+            className="relative w-full overflow-hidden rounded-2xl border border-border bg-surface-2 mx-auto"
+            style={{ aspectRatio: previewAspect, maxHeight: "80vh" }}
+          >
             {p.previewImage ? (
               <Image
                 src={p.previewImage}
                 alt={p.title}
                 fill
-                className="object-cover"
+                className="object-contain"
                 priority
                 sizes="(max-width: 1024px) 100vw, 60vw"
               />
