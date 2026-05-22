@@ -12,18 +12,20 @@ export const metadata: Metadata = {
   description: "Explore centenas de prompts para IA em português. Imagens, vídeos, textos e packs.",
 };
 
+type SearchParams = {
+  type?: string;
+  tool?: string;
+  price?: string;
+  sort?: string;
+  q?: string;
+  page?: string;
+};
+
 interface PageProps {
-  searchParams: {
-    type?: string;
-    tool?: string;
-    price?: string;
-    sort?: string;
-    q?: string;
-    page?: string;
-  };
+  searchParams: Promise<SearchParams>;
 }
 
-async function getPrompts(params: PageProps["searchParams"]) {
+async function getPrompts(params: SearchParams) {
   const { type, tool, price, sort = "copies", q, page = "1" } = params;
   const take = 24;
   const skip = (parseInt(page) - 1) * take;
@@ -67,8 +69,9 @@ async function getPrompts(params: PageProps["searchParams"]) {
 }
 
 export default async function ExplorarPage({ searchParams }: PageProps) {
-  const { prompts, total, pages } = await getPrompts(searchParams);
-  const page = parseInt(searchParams.page ?? "1");
+  const params = await searchParams;
+  const { prompts, total, pages } = await getPrompts(params);
+  const page = parseInt(params.page ?? "1");
 
   return (
     <div className="container py-10">
@@ -93,7 +96,7 @@ export default async function ExplorarPage({ searchParams }: PageProps) {
           {Array.from({ length: pages }, (_, i) => i + 1).map((p) => (
             <a
               key={p}
-              href={`?${new URLSearchParams({ ...searchParams, page: String(p) })}`}
+              href={`?${new URLSearchParams({ ...params, page: String(p) })}`}
               className={`flex h-9 w-9 items-center justify-center rounded-lg border text-sm font-medium transition-colors ${
                 p === page
                   ? "border-brand-purple bg-brand-purple/15 text-brand-purple"

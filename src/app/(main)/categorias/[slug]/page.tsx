@@ -7,17 +7,19 @@ import type { Metadata } from "next";
 export const dynamic = "force-dynamic";
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const cat = await prisma.category.findUnique({ where: { slug: params.slug } });
+  const { slug } = await params;
+  const cat = await prisma.category.findUnique({ where: { slug } });
   if (!cat) return { title: "Categoria não encontrada" };
   return { title: cat.name, description: cat.description ?? undefined };
 }
 
 export default async function CategoryPage({ params }: PageProps) {
-  const category = await prisma.category.findUnique({ where: { slug: params.slug } });
+  const { slug } = await params;
+  const category = await prisma.category.findUnique({ where: { slug } });
   if (!category) notFound();
 
   const prompts = await prisma.prompt.findMany({

@@ -3,11 +3,12 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { NewPromptForm } from "@/components/prompts/NewPromptForm";
 
-export default async function EditarPromptPage({ params }: { params: { id: string } }) {
+export default async function EditarPromptPage({ params }: { params: Promise<{ id: string }> }) {
   const session = await auth();
   const user = session?.user as any;
 
-  const prompt = await prisma.prompt.findUnique({ where: { id: params.id } });
+  const { id } = await params;
+  const prompt = await prisma.prompt.findUnique({ where: { id } });
   if (!prompt) notFound();
   if (prompt.creatorId !== user.id && user.role !== "ADMIN") redirect("/creator/prompts");
 

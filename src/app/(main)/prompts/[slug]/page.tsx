@@ -16,12 +16,13 @@ import type { Metadata } from "next";
 export const dynamic = "force-dynamic";
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
   const prompt = await prisma.prompt.findUnique({
-    where: { slug: params.slug },
+    where: { slug },
     select: { title: true, description: true, previewImage: true },
   });
   if (!prompt) return { title: "Prompt não encontrado" };
@@ -74,7 +75,8 @@ const typeLabel: Record<string, string> = {
 };
 
 export default async function PromptPage({ params }: PageProps) {
-  const data = await getPromptData(params.slug);
+  const { slug } = await params;
+  const data = await getPromptData(slug);
   if (!data) notFound();
 
   const { prompt, related } = data;
