@@ -41,14 +41,13 @@ async function getPromptData(slug: string) {
       category: true,
       creator: {
         select: { id: true, name: true, image: true },
-        include: { creatorProfile: true } as any,
       },
       reviews: {
         include: { user: { select: { id: true, name: true, image: true } } },
         orderBy: { createdAt: "desc" },
         take: 5,
       },
-    } as any,
+    },
   });
 
   if (!prompt) return null;

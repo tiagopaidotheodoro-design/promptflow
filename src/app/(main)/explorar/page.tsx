@@ -31,15 +31,15 @@ async function getPrompts(params: PageProps["searchParams"]) {
   const where: any = { status: "APPROVED" };
 
   if (type) where.type = type;
-  if (tool) where.recommendedTool = { contains: tool };
+  if (tool) where.recommendedTool = { contains: tool, mode: "insensitive" };
   if (price === "free") where.isFree = true;
   if (price === "premium") where.isPremium = true;
   if (price === "paid") { where.isFree = false; where.isPremium = false; where.price = { gt: 0 }; }
   if (q) {
     where.OR = [
-      { title: { contains: q } },
-      { description: { contains: q } },
-      { tags: { contains: q.toLowerCase() } },
+      { title: { contains: q, mode: "insensitive" } },
+      { description: { contains: q, mode: "insensitive" } },
+      { tags: { contains: q, mode: "insensitive" } },
     ];
   }
 
