@@ -140,7 +140,10 @@ export function NewPromptForm({ initialData }: { initialData?: any }) {
 
         <div className="space-y-1">
           <label className="text-xs font-medium text-text-secondary">URL da imagem de preview</label>
-          <Input placeholder="https://..." value={form.previewImage} onChange={(e) => set("previewImage", e.target.value)} />
+          <Input placeholder="https://exemplo.com/imagem.jpg" value={form.previewImage} onChange={(e) => set("previewImage", e.target.value)} />
+          <p className="text-[11px] text-text-muted">
+            Link direto de uma imagem (.jpg, .png, .webp). Não use links de página ou de conversa.
+          </p>
         </div>
 
         <div className="sm:col-span-2 space-y-1">
